@@ -1,24 +1,24 @@
 // import model
 const categoryModel = require("../models/categories")
-const redis = require("redis")
-const client = redis.createClient(6379)
+// const redis = require("redis")
+// const client = redis.createClient(6379)
 const myClient = "user : category"
 
 module.exports = {
   getCategories: (req, res) => {
-    return client.get(myClient, function (categories) {
-      if (categories) {
-        const result = JSON.parse(categories)
-        return res.json({
-          from: "cache",
-          status: 200,
-          data: result,
-          message: "Show data success"
-        })
-      } else {
+    //  return client.get(myClient, function (categories) {
+    //   if (categories) {
+    //     const result = JSON.parse(categories)
+    //     return res.json({
+    //       from: "cache",
+    //       status: 200,
+    //       data: result,
+    //       message: "Show data success"
+    //     })
+    //   } else {
         categoryModel.getCategories()
           .then(resultQuery => {
-            client.setex(myClient, 3600, JSON.stringify(resultQuery))
+            // client.setex(myClient, 3600, JSON.stringify(resultQuery))
             res.json({
               status: 300,
               message: "success getting all data categories",
@@ -32,8 +32,8 @@ module.exports = {
               message: "error getting all data categories"
             })
           })
-      }
-    });
+    //   }
+    // });
 
   },
   getByOneCategories: (req, res) => {
@@ -64,7 +64,7 @@ module.exports = {
 
     categoryModel.addCategories(data)
       .then(resultQuery => {
-        client.del(myClient, (resultQuery))
+        // client.del(myClient, (resultQuery))
         res.json({
           status: 200,
           message: "success adding all data categories",
@@ -88,7 +88,7 @@ module.exports = {
 
     categoryModel.updateCategories([data, id_category])
       .then(resultQuery => {
-        client.del(myClient, (resultQuery))
+        // client.del(myClient, (resultQuery))
         res.json({
           status: 200,
           message: "success update data category",
@@ -110,7 +110,7 @@ module.exports = {
 
     categoryModel.deleteCategories(id_category)
       .then(resultQuery => {
-        client.del(myClient, (resultQuery))
+        // client.del(myClient, (resultQuery))
         res.json({
           status: 200,
           message: "success delete data category",
@@ -124,5 +124,6 @@ module.exports = {
           message: "error delete data category"
         })
       })
+      
   }
 }

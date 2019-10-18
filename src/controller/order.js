@@ -1,5 +1,5 @@
 const orderModel = require("../models/order")
-const redis = require("redis")
+// const redis = require("redis")
 const conn = require("../configs/db")
 
 module.exports = {

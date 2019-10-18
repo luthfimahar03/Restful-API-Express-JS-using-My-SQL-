@@ -56,8 +56,8 @@ module.exports = {
         return new Promise((resolve, reject) => {
             conn.query("SELECT (SELECT sum(amount) FROM history WHERE DATE(date_update) = DATE(NOW() - INTERVAL 1 DAY)) AS yesterday," +
             "(SELECT sum(amount) FROM history WHERE DATE(date_update) = DATE(NOW() - INTERVAL 0 DAY)) AS daynow," +
-            "(SELECT sum(amount) FROM history WHERE YEAR(date_update) = YEAR(CURDATE()-1)) AS yearlast ," +
-            "(SELECT sum(amount) FROM history WHERE YEAR(date_update) = YEAR(CURDATE())-1) AS yearnow," +
+            "(SELECT sum(amount) FROM history WHERE YEAR(date_update) = YEAR(CURDATE())-1) AS yearlast ," +
+            "(SELECT sum(amount) FROM history WHERE YEAR(date_update) = YEAR(CURDATE())) AS yearnow," +
             "(SELECT COUNT(*) FROM history WHERE WEEK(date_update) = WEEK(CURDATE())-1) AS lastweek," +
             "(SELECT COUNT(*) FROM history WHERE WEEK(date_update) = WEEK(CURDATE())) AS weeknow", (err, result) => {
                 if (!err) {
